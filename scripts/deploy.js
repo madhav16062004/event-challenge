@@ -7,21 +7,21 @@
 const hre = require("hardhat");
 
 async function main() { 
-  const EventTest = await hre.ethers.getContractFactory("Bank");
+  const EventTest = await hre.ethers.getContractFactory("Deleivery");
   const eventTest = await EventTest.deploy();
 
   await eventTest.deployed();
 
-  eventTest.on("Deposit", (owner, amount) => {
-    console.log(`New deposit: ${owner} ${amount} WEI`);
+  eventTest.on("Deposit", (sender, number) => {
+    console.log(`New deposit: ${sender} ${number} `);
   })
 
-  eventTest.on("Withdraw", (owner, amount) => {
-    console.log(`New withdraw: ${owner} ${amount} WEI`);
+  eventTest.on("Ship", (sender, number,receiver) => {
+    console.log(`Parcel Shipped: ${sender} ${number} ${receiver} `);
   })
 
-  eventTest.on("Transfer", (from, to, amount) => {
-    console.log(`New transfer: ${from} ${to} ${amount} WEI`);
+  eventTest.on("Return", (receiver, number , sender) => {
+    console.log(`Parcel Returned: ${receiver} ${number} ${sender} `);
   })
 
   console.log(
